@@ -18,8 +18,8 @@ double rand_angle(double mean, double stddev) {
     random_device rd; 
     mt19937 gen(rd());
     normal_distribution<double> distribution(mean, stddev);
-    double thetamu=distribution(gen);
-}
+    return distribution(gen);
+} 
 
 int main() {
     double mean = 100;
