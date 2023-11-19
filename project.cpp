@@ -6,26 +6,12 @@
 using namespace std;
 
 // function to return optimal angle
-//double theta_c(double v0, double g, double d)
-//{
-  //  double sr=1 + 2*g/pow(v0,2)*(-0.6-1/2*g*pow(d,2)/pow(v0,2));
-    //double x=pow(v0,2)*(1 + sqrt(sr));
-    //double thetac = atan(x);
-    //return thetac;
-//}
-
-//opt angle
-
-void opt(){
-    double g=9.8;
-    double v=450;
-    double d=100;
-    double h=-0.6;
-    double a = -1/2*g*pow(d,2)/pow(v,2);
-    double b = d;
-    double c = h-1/2*g*pow(d,2)/pow(v,2);
-    double tang=-b+sqrt(pow(b,2)-4*a*c)/(2*a);
-    return atan(tang);
+double theta_c(double v0, double g, double d)
+{
+    double sr = 1 + 2*g/pow(v0,2)*(-0.6-1/2*g*pow(d,2)/pow(v0,2));
+    double x = pow(v0,2)/(g*d)*(1 - sqrt(sr));
+    double thetac = atan(x);
+    return thetac;
 }
 
 // function to return angle from gaussian function
@@ -42,6 +28,13 @@ double high(double h1, double v0, double g, double d, double angle)
 {
     double y = h1 - 1/2*g*pow(d,2)/(pow(v0,2))*(1 + pow(tan(angle),2)) + tan(angle)*d ;
     return y;
+}
+
+// probability of hitting
+double prob (double x1, double x2)
+{
+    double probab = x1/x2*100;
+    return probab;
 }
 
 int main() 
@@ -66,8 +59,30 @@ int main()
     double yy = high(h, vel, grav, x, ang);
     cout << "theta  " << ang << " " << "high:  " << yy << "meters" << endl;
 
+// create vector that is going to save n atempts
+int tot = 500; //total number of attempts
+int hit = 0; //counter for number of times that hits the target
+vector<double> position; //vector that saves position
 
-    double ttt=opt;
+for (int i = 0; i < tot; i++)
+{
+    double t = rand_angle(mean, stddev);
+    double angle = thet + t;
+    double yy = high(h, vel, grav, x, angle);
+    position.push_back(yy);
+    //cout  << position[i] << "\n" << endl;
+    if(position[i] < 2.30 && position[i] > 0.30)
+    {
+        hit++;
+    }
+}
+cout << hit << endl;
+
+//probability of hiting the target
+double sucess = prob(hit, tot);
+cout << sucess << "%" << endl;
+
+
 return 0;
 }
 
