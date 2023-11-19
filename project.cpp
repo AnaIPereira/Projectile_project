@@ -37,6 +37,11 @@ double prob (double x1, double x2)
     return probab;
 }
 
+//
+
+// MAIN FUNCTION
+
+//
 int main() 
 {
 // test theta_c function
@@ -84,19 +89,4 @@ cout << sucess << "%" << endl;
 
 return 0;
 }
-
-double hist (vector<double> l1, vector<double> l2)
-{
-    int bins = 10;
-    double j = 0;
-    for (double sep = 0.3; sep <= 2.3; sep=sep + 2/(double)bins)
-    {
-        l1.push_back(sep);
-        if
-        numbhits[j] = 
-        j++;
-    }
-}
-
-
 
