@@ -82,7 +82,21 @@ cout << hit << endl;
 double sucess = prob(hit, tot);
 cout << sucess << "%" << endl;
 
-
 return 0;
 }
+
+double hist (vector<double> l1, vector<double> l2)
+{
+    int bins = 10;
+    double j = 0;
+    for (double sep = 0.3; sep <= 2.3; sep=sep + 2/(double)bins)
+    {
+        l1.push_back(sep);
+        if
+        numbhits[j] = 
+        j++;
+    }
+}
+
+
 
