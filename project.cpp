@@ -55,9 +55,9 @@ public:
 };
 
 // function to return optimal angle
-double theta_c(double v0, double g, double d)
+double theta_c(double v0, double g, double d, double h1, double h2)
 {
-    double sr = 1 + 2*g/pow(v0,2)*(-0.6-1/2*g*pow(d,2)/pow(v0,2));
+    double sr = 1 + 2*g/pow(v0,2)*(h1-h2-1/2*g*pow(d,2)/pow(v0,2));
     double x = pow(v0,2)/(g*d)*(1 - sqrt(sr));
     double thetac = atan(x);
     return thetac;
@@ -81,15 +81,13 @@ double high(double h1, double v0, double g, double d, double angle)
 
 
 // function that simulates 15 attemps as many times as we give in the argument
-std::vector<double> numb_sim(double n)
+std::vector<double> numb_sim(double n, int tot, double stddev)
  {
     // create vector that is going to save n attempts
 
-    int tot = 15; // total number of attempts
     vector<double> vec_hits; // vector that saves # of hits
     double mean = 0;
-    double stddev = 3 * M_PI / 180;
-    double thet = theta_c(450, 9.8, 100); // computes the optimal angle
+    double thet = theta_c(450, 9.8, 100, 0.7, 1.3); // computes the optimal angle
 
     for (int k = 0; k < n; k++) {
         //cout << "trial  " << k << endl;
@@ -157,9 +155,9 @@ int main()
     //cout << "theta  " << ang << " " << "high:  " << yy << "meters" << endl;
 
 
-std::vector<double> test1 = numb_sim(1000);
-std::vector<double> test2 = numb_sim(10000);
-std::vector<double> test3 = numb_sim(100000);
+std::vector<double> test1 = numb_sim(5, 15, 3 * M_PI / 180);
+std::vector<double> test2 = numb_sim(10, 15, 3 * M_PI / 180);
+std::vector<double> test3 = numb_sim(100, 15, 3 * M_PI / 180);
 
 // Histograms
 std::unordered_map<double, int> histogram1 = computeHistogram(test1);
