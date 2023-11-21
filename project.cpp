@@ -5,45 +5,40 @@
 #include <random>
 using namespace std;
 
-class WritePyData { // Class to save data in numpy format
-    public: // Access specifier
-        string filename = "m_temp.py"; // temporary name of data file
 
+class WritePyData {
+public:
+    string filename = "m_temp.py";
+    bool initialized = false;  // Added flag to track initialization
 
-    WritePyData( // Constructor creates a data file if initialise is true
-        const string& x, 
-        bool initialise = true) // initialise is set to true as a default 
-    { 
-        filename = x; // Set filename attribute.
+    WritePyData(const string& x, bool initialise = true) {
+        filename = x;
         ofstream myfile;
-        if (initialise)
-        {
-        myfile.open (filename);
-        myfile << "import numpy as np" << "\n" << "\n";
+
+        if (initialise && !initialized) {
+            myfile.open(filename);
+            myfile << "import numpy as np" << "\n" << "\n";
+            myfile.close();
+            initialized = true;
         }
+    }
+
+    void write_out_vector(const string& array_name, const vector<double>& array)
+    {
+        ofstream myfile;
+        myfile.open(filename, std::ios_base::app);
+        myfile << array_name << " = np.array((" << "\n";
+
+        for (auto i = 0; i < array.size(); ++i) {
+            if (i != (array.size() - 1)) {
+                myfile << array.at(i) << ", " << "\n";
+            } else {
+                myfile << array.at(i) << "\n";
+            }
+        }
+        myfile << "))" << "\n";
         myfile.close();
     }
-
-    void write_out_vector( // Method to save data to file created by constructor
-        string& array_name , // Name of numpy array
-        const vector<double>& array) // Vector to be saved
-    {
-    ofstream myfile;
-    myfile.open(filename, std::ios_base::app); // Opens file without wiping it
-    myfile << array_name << " = np.array((" << "\n";
-
-    for (auto i = 0; i < array.size(); ++i) // Loops over vector and saves element by element
-    {
-        if (i != (array.size() - 1))
-        {myfile << array.at(i) << ", " << "\n";}
-    else
-        {myfile << array.at(i) << "\n";}
-    }
-    myfile << "))" << "\n";
-    myfile.close();
-    }
-
-
 };
 
 // function to return optimal angle
@@ -70,6 +65,7 @@ double high(double h1, double v0, double g, double d, double angle)
     double y = h1 - 1/2*g*pow(d,2)/(pow(v0,2))*(1 + pow(tan(angle),2)) + tan(angle)*d ;
     return y;
 }
+
 
 // function that simulates 15 attemps as many times as we give in the argument
 double numb_sim(double n) {
@@ -119,8 +115,12 @@ double numb_sim(double n) {
     {
         cout << "yy hist  " << hist_y[w] << endl;
     }
-}
 
+    WritePyData dataWriter("m_temp.py"); // Create an instance of WritePyData
+
+    // Use the instance to write data to the file
+    dataWriter.write_out_vector("yy", vec_hits);
+}
 
 // MAIN FUNCTION
 
@@ -147,7 +147,8 @@ int main()
     //cout << "theta  " << ang << " " << "high:  " << yy << "meters" << endl;
 
 // test numb_sim function
-    double test = numb_sim(10);
+    double test = numb_sim(100);
+
 
 return 0;
 }
