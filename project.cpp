@@ -80,6 +80,21 @@ double numb_sim(double n) {
     {
         cout << "number of hits  " << vec_hits[p] << endl;
     }
+    vector<double> hist_y(15);
+    for (int l = 0; l < vec_hits.size(); l++)
+    {
+        for (int r = 0; r <= 15; r++)
+            {
+                if (vec_hits[l]==r)
+                  {
+                       hist_y[r]=hist_y[r]+1;
+                  }
+            }
+    }
+    for (int w = 0; w < hist_y.size(); w++)
+    {
+        cout << "xx hist  " << hist_y[w] << endl;
+    }
 }
 
 
@@ -108,7 +123,7 @@ int main()
     //cout << "theta  " << ang << " " << "high:  " << yy << "meters" << endl;
 
 // test numb_sim function
-    double test = numb_sim(1000);
+    double test = numb_sim(10);
 
 return 0;
 }
