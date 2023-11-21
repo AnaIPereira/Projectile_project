@@ -8,14 +8,14 @@
 using namespace std;
 
 // Function to compute histogram from a vector of data
-std::unordered_map<double, int> computeHistogram(const std::vector<double>& data) {
+std::unordered_map<double, int> computeHistogram(const std::vector<double>& data) 
+{
     std::unordered_map<double, int> histogram;
 
     // Count occurrences of each unique element in the vector
     for (double value : data) {
         histogram[value]++;
     }
-
     return histogram;
 }
 
@@ -138,22 +138,22 @@ std::vector<double> numb_sim(double n)
 int main() 
 {
 // test theta_c function
-    double vel=450;
-    double grav=9.8;
-    double x=100;
-    double thet=theta_c(vel,grav,x);
+    //double vel=450;
+   // double grav=9.8;
+   // double x=100;
+   // double thet=theta_c(vel,grav,x);
     //cout << "Optimal Angle: " << thet << " radians" << endl;
 
 // test rand_angle function
-    double mean = 0;
-    double stddev = 3*M_PI/180;
-    double t = rand_angle(mean, stddev);
+   // double mean = 0;
+  //  double stddev = 3*M_PI/180;
+   // double t = rand_angle(mean, stddev);
     //cout << "Random Angle: " << t << " radians" << endl;
 
 // teste high function
-    double h = 0.7;
-    double ang = thet + t;
-    double yy = high(h, vel, grav, x, ang);
+   // double h = 0.7;
+   // double ang = thet + t;
+  //  double yy = high(h, vel, grav, x, ang);
     //cout << "theta  " << ang << " " << "high:  " << yy << "meters" << endl;
 
 
@@ -161,22 +161,35 @@ std::vector<double> test1 = numb_sim(100);
 std::vector<double> test2 = numb_sim(1000);
 std::vector<double> test3 = numb_sim(10000);
 
-//Histogram
-std::unordered_map<double, int> histogram = computeHistogram(test1);
+// Histograms
+std::unordered_map<double, int> histogram1 = computeHistogram(test1);
+std::unordered_map<double, int> histogram2 = computeHistogram(test2);
+std::unordered_map<double, int> histogram3 = computeHistogram(test3);
 
-std::cout << "Histogram:\n";
-for (const auto& entry : histogram) {
+// Print histograms
+std::cout << "Histogram for test1:\n";
+for (const auto& entry : histogram1) {
+    std::cout << entry.first << ": " << entry.second << " occurrences\n";
+}
+
+std::cout << "Histogram for test2:\n";
+for (const auto& entry : histogram2) {
+    std::cout << entry.first << ": " << entry.second << " occurrences\n";
+}
+
+std::cout << "Histogram for test3:\n";
+for (const auto& entry : histogram3) {
     std::cout << entry.first << ": " << entry.second << " occurrences\n";
 }
 
 WritePyData dataWriter1("m_temp1.py");
-dataWriter1.write_out_vector("yy", test1);
+dataWriter1.write_out_vector("yy1", test1);
 
 WritePyData dataWriter2("m_temp2.py");
-dataWriter2.write_out_vector("yy", test2);
+dataWriter2.write_out_vector("yy2", test2);
 
 WritePyData dataWriter3("m_temp3.py");
-dataWriter3.write_out_vector("yy", test3);
+dataWriter3.write_out_vector("yy3", test3);
 
 
 return 0;
