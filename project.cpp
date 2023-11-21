@@ -157,9 +157,9 @@ int main()
     //cout << "theta  " << ang << " " << "high:  " << yy << "meters" << endl;
 
 
-std::vector<double> test1 = numb_sim(100);
-std::vector<double> test2 = numb_sim(1000);
-std::vector<double> test3 = numb_sim(10000);
+std::vector<double> test1 = numb_sim(1000);
+std::vector<double> test2 = numb_sim(10000);
+std::vector<double> test3 = numb_sim(100000);
 
 // Histograms
 std::unordered_map<double, int> histogram1 = computeHistogram(test1);
