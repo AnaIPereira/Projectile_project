@@ -3,12 +3,25 @@
 #include <vector>
 #include <fstream>
 #include <random>
+#include <unordered_map>
+
 using namespace std;
 
+// Function to compute histogram from a vector of data
+std::unordered_map<double, int> computeHistogram(const std::vector<double>& data) {
+    std::unordered_map<double, int> histogram;
+
+    // Count occurrences of each unique element in the vector
+    for (double value : data) {
+        histogram[value]++;
+    }
+
+    return histogram;
+}
 
 class WritePyData {
 public:
-    string filename = "m_temp.py";
+    string filename = "m_temp.txt";
     bool initialized = false;  // Added flag to track initialization
 
     WritePyData(const string& x, bool initialise = true) {
@@ -68,7 +81,8 @@ double high(double h1, double v0, double g, double d, double angle)
 
 
 // function that simulates 15 attemps as many times as we give in the argument
-double numb_sim(double n) {
+std::vector<double> numb_sim(double n)
+ {
     // create vector that is going to save n attempts
 
     int tot = 15; // total number of attempts
@@ -96,10 +110,10 @@ double numb_sim(double n) {
     }
 
     cout << "vector size  " << vec_hits.size() << endl;
-    for (int p = 0; p < vec_hits.size(); p++)
-    {
-        cout << "number of hits  " << vec_hits[p] << endl;
-    }
+    //for (int p = 0; p < vec_hits.size(); p++)
+   // {
+       // cout << "number of hits  " << vec_hits[p] << endl;
+   // }
     vector<double> hist_y(15);
     for (int l = 0; l < vec_hits.size(); l++)
     {
@@ -120,6 +134,7 @@ double numb_sim(double n) {
 
     // Use the instance to write data to the file
     dataWriter.write_out_vector("yy", vec_hits);
+    return vec_hits;
 }
 
 // MAIN FUNCTION
@@ -146,8 +161,16 @@ int main()
     double yy = high(h, vel, grav, x, ang);
     //cout << "theta  " << ang << " " << "high:  " << yy << "meters" << endl;
 
-// test numb_sim function
-    double test = numb_sim(100);
+
+std::vector<double> test = numb_sim(100);
+
+//Histogram
+std::unordered_map<double, int> histogram = computeHistogram(test);
+
+std::cout << "Histogram:\n";
+for (const auto& entry : histogram) {
+    std::cout << entry.first << ": " << entry.second << " occurrences\n";
+}
 
 
 return 0;

@@ -2,8 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Read data from a file
-filename = 'm_temp.py'
-data = np.loadpy(filename)
+filename = 'm_temp.txt'
+data = np.loadtxt(filename)
 
 # Plotting the histogram
 plt.hist(data, bins=10, edgecolor='black')  # Adjust the number of bins as needed
