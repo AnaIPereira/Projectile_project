@@ -5,22 +5,46 @@
 #include <random>
 using namespace std;
 
-void write_out_vec(const string& filename, string& array_name , const vector<double>& output, bool initialise = true)
-// Writes out data in numpy form. If initialise == true, creates file from scratch and includes top lines needed
-{
-ofstream myfile;
-if (initialise){
-myfile.open (filename);
-myfile << "import numpy as np" << "\n" << "\n";}
-else{myfile.open (filename, std::ios_base::app);}
-myfile << array_name << " = np.array((" << "\n";
-for (auto i = 0; i < output.size(); ++i)
-{if (i != (output.size() - 1))
-{myfile << output.at(i) << ", " << "\n";}
-else
-{myfile << output.at(i) << "\n";}}
-myfile << "))" << "\n";
-myfile.close();}
+class WritePyData { // Class to save data in numpy format
+    public: // Access specifier
+        string filename = "m_temp.py"; // temporary name of data file
+
+
+    WritePyData( // Constructor creates a data file if initialise is true
+        const string& x, 
+        bool initialise = true) // initialise is set to true as a default 
+    { 
+        filename = x; // Set filename attribute.
+        ofstream myfile;
+        if (initialise)
+        {
+        myfile.open (filename);
+        myfile << "import numpy as np" << "\n" << "\n";
+        }
+        myfile.close();
+    }
+
+    void write_out_vector( // Method to save data to file created by constructor
+        string& array_name , // Name of numpy array
+        const vector<double>& array) // Vector to be saved
+    {
+    ofstream myfile;
+    myfile.open(filename, std::ios_base::app); // Opens file without wiping it
+    myfile << array_name << " = np.array((" << "\n";
+
+    for (auto i = 0; i < array.size(); ++i) // Loops over vector and saves element by element
+    {
+        if (i != (array.size() - 1))
+        {myfile << array.at(i) << ", " << "\n";}
+    else
+        {myfile << array.at(i) << "\n";}
+    }
+    myfile << "))" << "\n";
+    myfile.close();
+    }
+
+
+};
 
 // function to return optimal angle
 double theta_c(double v0, double g, double d)
@@ -93,7 +117,7 @@ double numb_sim(double n) {
     }
     for (int w = 0; w < hist_y.size(); w++)
     {
-        cout << "xx hist  " << hist_y[w] << endl;
+        cout << "yy hist  " << hist_y[w] << endl;
     }
 }
 
