@@ -1,17 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from m_temp import yy  # Assuming yy is defined in m_temp.py
 
-# Read data from a file
-filename = 'm_temp.txt'
-data = np.loadtxt(filename)
-
-# Plotting the histogram
-plt.hist(data, bins=10, edgecolor='black')  # Adjust the number of bins as needed
-
-# Adding labels and title
-plt.xlabel('Value')
-plt.ylabel('Frequency')
-plt.title('Histogram from File')
-
-# Display the plot
+# Plot the histogram
+plt.hist(yy, bins=range(16), align='left', rwidth=0.8)
+plt.xlabel('Number of Hits')
+plt.ylabel('Occurrences')
+plt.title('Histogram of Hits')
 plt.show()

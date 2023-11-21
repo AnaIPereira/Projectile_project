@@ -129,11 +129,6 @@ std::vector<double> numb_sim(double n)
     {
         cout << "yy hist  " << hist_y[w] << endl;
     }
-
-    WritePyData dataWriter("m_temp.py"); // Create an instance of WritePyData
-
-    // Use the instance to write data to the file
-    dataWriter.write_out_vector("yy", vec_hits);
     return vec_hits;
 }
 
@@ -162,15 +157,26 @@ int main()
     //cout << "theta  " << ang << " " << "high:  " << yy << "meters" << endl;
 
 
-std::vector<double> test = numb_sim(100);
+std::vector<double> test1 = numb_sim(100);
+std::vector<double> test2 = numb_sim(1000);
+std::vector<double> test3 = numb_sim(10000);
 
 //Histogram
-std::unordered_map<double, int> histogram = computeHistogram(test);
+std::unordered_map<double, int> histogram = computeHistogram(test1);
 
 std::cout << "Histogram:\n";
 for (const auto& entry : histogram) {
     std::cout << entry.first << ": " << entry.second << " occurrences\n";
 }
+
+WritePyData dataWriter1("m_temp1.py");
+dataWriter1.write_out_vector("yy", test1);
+
+WritePyData dataWriter2("m_temp2.py");
+dataWriter2.write_out_vector("yy", test2);
+
+WritePyData dataWriter3("m_temp3.py");
+dataWriter3.write_out_vector("yy", test3);
 
 
 return 0;
