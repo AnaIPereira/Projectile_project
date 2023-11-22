@@ -108,11 +108,11 @@ std::vector<double> numb_sim(double n, int tot, double stddev, double thet, doub
         }
         vec_hits.push_back(hit); // saves the total number of hits for 15 attempt
     }
-    cout << "vector size  " << vec_hits.size() << endl;
+   //cout << "vector size  " << vec_hits.size() << endl;
     double fif_per = 0;
     for (int p = 0; p < vec_hits.size(); p++)
     {
-        cout << "number of hits  " << vec_hits[p] << endl;
+       // cout << "number of hits  " << vec_hits[p] << endl;
         if (vec_hits[p]>=8)
         {
             fif_per = fif_per + 1;
@@ -165,8 +165,7 @@ int main()
     double thet2 = theta_c(600, 9.8, 100, 0.3, 1.3); // computes the optimal angle for shooter 2
     cout << "Optimal Angle 2: " << thet2 << " radians" << endl;
 
-std::vector<double> test1 = numb_sim(10000, 15, 3 * M_PI / 180, thet1, 0.7, 450, 100);
-/*
+std::vector<double> test1 = numb_sim(1000, 15, 3 * M_PI / 180, thet1, 0.7, 450, 100);
 std::vector<double> test2 = numb_sim(10000, 15, 3 * M_PI / 180, thet1, 0.7, 450, 100);
 std::vector<double> test3 = numb_sim(100000, 15, 3 * M_PI / 180, thet1, 0.7, 450, 100);
 
@@ -231,8 +230,14 @@ dataWriter5.write_out_vector("yy5", test5);
 
 WritePyData dataWriter6("m_temp6.py");
 dataWriter6.write_out_vector("yy6", test6);
-*/
 
+/*
+double variable = high(0.7, 450, 9.8, 100, 0.00600002);
+cout << "high = " << variable << endl;
+
+double variable2 = high(0.7, 450, 9.8, 100, 1.56838);
+cout << "high = " << variable2 << endl;
 return 0;
+*/
 }
 
