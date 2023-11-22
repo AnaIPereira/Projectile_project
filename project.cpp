@@ -87,31 +87,39 @@ std::vector<double> numb_sim(double n, int tot, double stddev, double thet, doub
     vector<double> vec_hits; // vector that saves # of hits
     vector<double> save_thet; // vector that saves thetas in each tria
     double mean = 0;
-
-    for (int k = 0; k < n; k++) {
+    for (int k = 0; k < n; k++) 
+    {
         //cout << "trial  " << k << endl;
         int hit = 0; // counter for the number of times that hit the target
         vector<double> position; // vector that saves position
 
-        for (int i = 0; i < tot; i++) {
+        for (int i = 0; i < tot; i++) 
+        {
             double t = rand_angle(mean, stddev); // computes the random angle
             double angle = thet + t; // optimal angles plus random angle
             save_thet.push_back(angle);
             double yy = high(y_init, vel, 9.8, dist, angle); // computes the high
             position.push_back(yy); // vector that saves high for each attempt
 
-            if (position[i] < 2.30 && position[i] > 0.30) {
+            if (position[i] < 2.30 && position[i] > 0.30) 
+            {
                 hit++; // in the end is the total number of hits
             }
         }
         vec_hits.push_back(hit); // saves the total number of hits for 15 attempt
     }
-
     cout << "vector size  " << vec_hits.size() << endl;
-    //for (int p = 0; p < vec_hits.size(); p++)
-   // {
-       // cout << "number of hits  " << vec_hits[p] << endl;
-   // }
+    double fif_per = 0;
+    for (int p = 0; p < vec_hits.size(); p++)
+    {
+        cout << "number of hits  " << vec_hits[p] << endl;
+        if (vec_hits[p]>=8)
+        {
+            fif_per = fif_per + 1;
+        }
+    }
+    fif_per = fif_per/n*100;
+    cout << "fif_perc = " << fif_per << endl;
     vector<double> hist_y(15);
     for (int l = 0; l < vec_hits.size(); l++)
     {
@@ -157,7 +165,8 @@ int main()
     double thet2 = theta_c(600, 9.8, 100, 0.3, 1.3); // computes the optimal angle for shooter 2
     cout << "Optimal Angle 2: " << thet2 << " radians" << endl;
 
-std::vector<double> test1 = numb_sim(1000, 15, 3 * M_PI / 180, thet1, 0.7, 450, 100);
+std::vector<double> test1 = numb_sim(10000, 15, 3 * M_PI / 180, thet1, 0.7, 450, 100);
+/*
 std::vector<double> test2 = numb_sim(10000, 15, 3 * M_PI / 180, thet1, 0.7, 450, 100);
 std::vector<double> test3 = numb_sim(100000, 15, 3 * M_PI / 180, thet1, 0.7, 450, 100);
 
@@ -222,7 +231,7 @@ dataWriter5.write_out_vector("yy5", test5);
 
 WritePyData dataWriter6("m_temp6.py");
 dataWriter6.write_out_vector("yy6", test6);
-
+*/
 
 return 0;
 }
