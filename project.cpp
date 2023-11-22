@@ -81,17 +81,12 @@ double high(double h1, double v0, double g, double d, double angle)
 
 
 // function that simulates tot attemps as many times as we give in the argument and simulate it n times
-std::vector<double> numb_sim(double n, int tot, double stddev)
+std::vector<double> numb_sim(double n, int tot, double stddev, double thet, double y_init, double vel, double dist)
  {
     // create vector that is going to save n attempts
-
     vector<double> vec_hits; // vector that saves # of hits
-     vector<double> save_thet; // vector that saves thetas in each tria
+    vector<double> save_thet; // vector that saves thetas in each tria
     double mean = 0;
-    double thet = theta_c(450, 9.8, 100, 0.7, 1.3); // computes the optimal angle for shooter 1
-    cout << "Optimal Angle 1: " << thet << " radians" << endl;
-    double thet2 = theta_c(600, 9.8, 100, 0.3, 1.3); // computes the optimal angle for shooter 2
-    cout << "Optimal Angle 2: " << thet2 << " radians" << endl;
 
     for (int k = 0; k < n; k++) {
         //cout << "trial  " << k << endl;
@@ -102,7 +97,7 @@ std::vector<double> numb_sim(double n, int tot, double stddev)
             double t = rand_angle(mean, stddev); // computes the random angle
             double angle = thet + t; // optimal angles plus random angle
             save_thet.push_back(angle);
-            double yy = high(0.7, 450, 9.8, 100, angle); // computes the high
+            double yy = high(y_init, vel, 9.8, dist, angle); // computes the high
             position.push_back(yy); // vector that saves high for each attempt
 
             if (position[i] < 2.30 && position[i] > 0.30) {
@@ -157,13 +152,18 @@ std::vector<double> numb_sim(double n, int tot, double stddev)
 
 int main() 
 {
-std::vector<double> test1 = numb_sim(5, 15, 3 * M_PI / 180);
-std::vector<double> test2 = numb_sim(10, 15, 3 * M_PI / 180);
-std::vector<double> test3 = numb_sim(100, 15, 3 * M_PI / 180);
+    double thet1 = theta_c(450, 9.8, 100, 0.7, 1.3); // computes the optimal angle for shooter 1
+    cout << "Optimal Angle 1: " << thet1 << " radians" << endl;
+    double thet2 = theta_c(600, 9.8, 100, 0.3, 1.3); // computes the optimal angle for shooter 2
+    cout << "Optimal Angle 2: " << thet2 << " radians" << endl;
 
-std::vector<double> test4 = numb_sim(5, 10, 1 * M_PI / 180);
-std::vector<double> test5 = numb_sim(10, 10, 1 * M_PI / 180);
-std::vector<double> test6 = numb_sim(100, 10, 1 * M_PI / 180);
+std::vector<double> test1 = numb_sim(100, 15, 3 * M_PI / 180, thet1, 0.7, 450, 100);
+std::vector<double> test2 = numb_sim(1000, 15, 3 * M_PI / 180, thet1, 0.7, 450, 100);
+std::vector<double> test3 = numb_sim(10000, 15, 3 * M_PI / 180, thet1, 0.7, 450, 100);
+
+std::vector<double> test4 = numb_sim(100, 10, 1 * M_PI / 180, thet2, 0.3, 600, 100);
+std::vector<double> test5 = numb_sim(1000, 10, 1 * M_PI / 180, thet2, 0.3, 600, 100);
+std::vector<double> test6 = numb_sim(10000, 10, 1 * M_PI / 180, thet2, 0.3, 600, 100);
 
 // Histograms
 std::unordered_map<double, int> histogram1 = computeHistogram(test1);
