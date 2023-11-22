@@ -140,9 +140,9 @@ std::vector<double> numb_sim(double n, int tot, double stddev, double thet, doub
     double variance;
     for (int l = 0; l < save_thet.size(); l++)
     {
-        variance = variance + pow((save_thet[l]-theta_med),2);
+        variance = variance + pow((save_thet[l]-theta_med_fin),2);
     }
-    double variance_fin = variance /(n*tot);
+    double variance_fin = sqrt(variance /(n*tot));
     cout << "variance " << variance_fin << endl;
     return vec_hits;
 }
@@ -157,13 +157,13 @@ int main()
     double thet2 = theta_c(600, 9.8, 100, 0.3, 1.3); // computes the optimal angle for shooter 2
     cout << "Optimal Angle 2: " << thet2 << " radians" << endl;
 
-std::vector<double> test1 = numb_sim(100, 15, 3 * M_PI / 180, thet1, 0.7, 450, 100);
-std::vector<double> test2 = numb_sim(1000, 15, 3 * M_PI / 180, thet1, 0.7, 450, 100);
-std::vector<double> test3 = numb_sim(10000, 15, 3 * M_PI / 180, thet1, 0.7, 450, 100);
+std::vector<double> test1 = numb_sim(1000, 15, 3 * M_PI / 180, thet1, 0.7, 450, 100);
+std::vector<double> test2 = numb_sim(10000, 15, 3 * M_PI / 180, thet1, 0.7, 450, 100);
+std::vector<double> test3 = numb_sim(100000, 15, 3 * M_PI / 180, thet1, 0.7, 450, 100);
 
-std::vector<double> test4 = numb_sim(100, 10, 1 * M_PI / 180, thet2, 0.3, 600, 100);
-std::vector<double> test5 = numb_sim(1000, 10, 1 * M_PI / 180, thet2, 0.3, 600, 100);
-std::vector<double> test6 = numb_sim(10000, 10, 1 * M_PI / 180, thet2, 0.3, 600, 100);
+std::vector<double> test4 = numb_sim(1000, 10, 1 * M_PI / 180, thet2, 0.3, 600, 100);
+std::vector<double> test5 = numb_sim(10000, 10, 1 * M_PI / 180, thet2, 0.3, 600, 100);
+std::vector<double> test6 = numb_sim(100000, 10, 1 * M_PI / 180, thet2, 0.3, 600, 100);
 
 // Histograms
 std::unordered_map<double, int> histogram1 = computeHistogram(test1);
