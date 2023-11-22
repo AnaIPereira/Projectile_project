@@ -157,20 +157,6 @@ std::vector<double> numb_sim(double n, int tot, double stddev)
 
 int main() 
 {
-
-// test rand_angle function
-   // double mean = 0;
-  //  double stddev = 3*M_PI/180;
-   // double t = rand_angle(mean, stddev);
-    //cout << "Random Angle: " << t << " radians" << endl;
-
-// teste high function
-   // double h = 0.7;
-   // double ang = thet + t;
-  //  double yy = high(h, vel, grav, x, ang);
-    //cout << "theta  " << ang << " " << "high:  " << yy << "meters" << endl;
-
-
 std::vector<double> test1 = numb_sim(5, 15, 3 * M_PI / 180);
 std::vector<double> test2 = numb_sim(10, 15, 3 * M_PI / 180);
 std::vector<double> test3 = numb_sim(100, 15, 3 * M_PI / 180);
