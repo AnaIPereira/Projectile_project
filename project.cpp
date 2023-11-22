@@ -80,17 +80,19 @@ double high(double h1, double v0, double g, double d, double angle)
 }
 
 
-// function that simulates 15 attemps as many times as we give in the argument
+// function that simulates tot attemps as many times as we give in the argument and simulate it n times
 std::vector<double> numb_sim(double n, int tot, double stddev)
  {
     // create vector that is going to save n attempts
 
     vector<double> vec_hits; // vector that saves # of hits
+     vector<double> save_thet; // vector that saves thetas in each tria
     double mean = 0;
     double thet = theta_c(450, 9.8, 100, 0.7, 1.3); // computes the optimal angle for shooter 1
     cout << "Optimal Angle 1: " << thet << " radians" << endl;
     double thet2 = theta_c(600, 9.8, 100, 0.3, 1.3); // computes the optimal angle for shooter 2
     cout << "Optimal Angle 2: " << thet2 << " radians" << endl;
+
     for (int k = 0; k < n; k++) {
         //cout << "trial  " << k << endl;
         int hit = 0; // counter for the number of times that hit the target
@@ -99,6 +101,7 @@ std::vector<double> numb_sim(double n, int tot, double stddev)
         for (int i = 0; i < tot; i++) {
             double t = rand_angle(mean, stddev); // computes the random angle
             double angle = thet + t; // optimal angles plus random angle
+            save_thet.push_back(angle);
             double yy = high(0.7, 450, 9.8, 100, angle); // computes the high
             position.push_back(yy); // vector that saves high for each attempt
 
@@ -129,6 +132,23 @@ std::vector<double> numb_sim(double n, int tot, double stddev)
     {
         cout << "yy hist  " << hist_y[w] << endl;
     }
+
+    double theta_med = 0;
+    for (int u = 0; u < save_thet.size(); u++)
+    {
+        theta_med = theta_med + save_thet[u];
+    }
+
+    double theta_med_fin = theta_med/(n*tot);
+        cout << "mean " << theta_med_fin << endl;
+
+    double variance;
+    for (int l = 0; l < save_thet.size(); l++)
+    {
+        variance = variance + pow((save_thet[l]-theta_med),2);
+    }
+    double variance_fin = variance /(n*tot);
+    cout << "variance " << variance_fin << endl;
     return vec_hits;
 }
 

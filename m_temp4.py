@@ -1,9 +1,9 @@
 import numpy as np
 
 yy4 = np.array((
-6, 
+7, 
+5, 
 3, 
 5, 
-4, 
-6
+2
 ))
